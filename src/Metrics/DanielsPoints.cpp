@@ -281,7 +281,7 @@ class DanielsEquivalentPower : public RideMetric {
     void compute(RideItem *item, Specification, const QHash<QString,RideMetric*> &deps) {
 
         // no zones
-        if (item->context->athlete->zones(item->isRun) == NULL || item->zoneRange < 0) {
+        if (item->zoneRange < 0) {
             setValue(RideFile::NIL);
             setCount(0);
             return;
@@ -305,7 +305,7 @@ class DanielsEquivalentPower : public RideMetric {
 
         setValue(watts);
     }
-    bool isRelevantForRide(const RideItem *ride) const { return (ride->present.contains("P")); }
+    bool isRelevantForRide(const RideItem *ride) const { return true; } // (ride->present.contains("P") || ride->isRun || ride->isSwim); }
     MetricClass classification() const { return Undefined; }
     MetricValidity validity() const { return Unknown; }
     RideMetric *clone() const { return new DanielsEquivalentPower(*this); }
